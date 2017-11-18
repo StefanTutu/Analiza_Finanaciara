@@ -1,0 +1,29 @@
+//created on: Nov 18, 2017
+package rules
+
+//list any import classes here.
+
+
+
+//declare any global variables here
+
+
+
+
+rule "Your First Rule 1234 4"
+
+    when
+        //conditions
+    then
+        //actions
+
+end
+
+rule "Your Second Rule  asda12 "
+    //include attributes such as "salience" here...
+    when
+        //conditions
+    then
+        //actions
+
+end

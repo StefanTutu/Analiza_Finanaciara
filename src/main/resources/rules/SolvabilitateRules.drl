@@ -1,0 +1,297 @@
+//created on: Nov 12, 2017
+package rules
+import main.java.Solvabilitate.*;
+import com.sample.*;
+import java.util.*;
+
+//declare any global variables here
+
+
+rule "Exista posibilitatea de a calcula activul net contabil"
+    when
+        i: IndicatorFinanciar( conturiTotalDatorii.size()>0, conturiTotalActiv.size()>0 )
+    then
+    ActivNetContabil a = new ActivNetContabil(i);
+    a.setValoareActivNetContabil();
+    
+    	insert(a);
+    	System.out.println("1. Datoriile si activul total sunt definite, deci se poate calcula activul net contabil.");
+    	
+    	System.out.println("Suma datoriilor: "+calculSuma(i.getConturiTotalDatorii()));
+    	System.out.println("Suma activelor: "+calculSuma(i.getConturiTotalActiv()));
+    	
+end
+
+rule "Activ net contabil pozitiv"
+   
+    when
+	i: IndicatorFinanciar() and
+	a:ActivNetContabil(indicatorFinanciar==i,valoareActivNetContabil>0)
+    then
+       a.setTip(TipActivNetContabil.POZITIV);
+       System.out.println("2. Activul net contabil este POZITIV, valoarea lui fiind: "+a.getValoareActivNetContabil());
+end
+
+rule "Activ net contabil neutru"
+   
+    when
+	i: IndicatorFinanciar() and
+	a:ActivNetContabil(indicatorFinanciar==i,valoareActivNetContabil==0)
+    then
+       a.setTip(TipActivNetContabil.NEUTRU);
+       System.out.println("2. Activul net contabil este NEUTRU, valoarea lui fiind: "+a.getValoareActivNetContabil());
+end
+
+rule "Activ net contabil negativ"
+   
+    when
+	i: IndicatorFinanciar() and
+	a:ActivNetContabil(indicatorFinanciar==i,valoareActivNetContabil<0)
+    then
+       a.setTip(TipActivNetContabil.NEUTRU);
+       System.out.println("2. Activul net contabil este NEGATIV, valoarea lui fiind: "+a.getValoareActivNetContabil());
+end
+
+rule "Exista posibilitatea de a calcula rata solvab. patrimoniale"
+    when
+        i: IndicatorFinanciar( conturiTotalCapitaluri.size()>0, conturiCapitalPropriu.size()>0 )
+    then
+    RataSolvabPatrimoniala a = new RataSolvabPatrimoniala(i);
+    a.setValoareRataSolvabPatrimoniala();
+    
+    	insert(a);
+    	System.out.println();
+    	System.out.println("3. Capitalul propriu si capitalurile totale sunt definite, deci se poate calcula rata solvab. patrimoniale.");
+    	
+    	System.out.println("Suma capitalului propriu: "+calculSuma(i.getConturiCapitalPropriu()));
+    	System.out.println("Suma capitalului: "+calculSuma(i.getConturiTotalCapitaluri()));
+end
+
+rule "Rata solvab. patrimoniale MARE"
+   
+    when
+	i: IndicatorFinanciar() and
+	a:RataSolvabPatrimoniala(indicatorFinanciar==i, valoareRataSolvabPatrimoniala>0.5)
+    then
+       a.setTip(TipRataSolvabPatrimoniala.MARE);
+       System.out.println("4. Rata solvab. patrimoniale este MARE, valoarea lui fiind: "+a.getValoareRataSolvabPatrimoniala());
+end
+
+rule "Rata solvab. patrimoniale OK"
+   
+    when
+	i: IndicatorFinanciar() and
+	a:RataSolvabPatrimoniala(indicatorFinanciar==i, valoareRataSolvabPatrimoniala>=0.3 , valoareRataSolvabPatrimoniala<=0.5)
+    then
+       a.setTip(TipRataSolvabPatrimoniala.OK);
+       System.out.println("4. Rata solvab. patrimoniale este OK, valoarea lui fiind: "+a.getValoareRataSolvabPatrimoniala());
+end
+
+rule "Rata solvab. patrimoniale MICA"
+   
+    when
+	i: IndicatorFinanciar() and
+	a:RataSolvabPatrimoniala(indicatorFinanciar==i, valoareRataSolvabPatrimoniala<0.3)
+    then
+       a.setTip(TipRataSolvabPatrimoniala.MIC);
+       System.out.println("4. Rata solvab. patrimoniale este MICA, valoarea lui fiind: "+a.getValoareRataSolvabPatrimoniala());
+end
+
+rule "Exista posibilitatea de a calcula rata solvab. generale"
+    when
+        i: IndicatorFinanciar( conturiTotalDatorii.size()>0, conturiTotalActiv.size()>0 )
+    then
+    RataSolvabGenerala a = new RataSolvabGenerala(i);
+    a.setValoareRataSolvabGenerala();
+    
+    	insert(a);
+    	System.out.println();
+    	System.out.println("5. Datoriile si activul total sunt definite, deci se poate calcula rata solvab. generala.");
+    	System.out.println("Suma datoriilor: "+calculSuma(i.getConturiTotalDatorii()));
+    	System.out.println("Suma activelor: "+calculSuma(i.getConturiTotalActiv()));
+    	
+end
+
+rule "Rata solvab. generale OK"
+   
+    when
+	i: IndicatorFinanciar() and
+	a:RataSolvabGenerala(indicatorFinanciar==i, valoareRataSolvabGenerala>1)
+    then
+       a.setTip(TipRataSolvabGenerala.OK);
+       System.out.println("6. Rata solvab. generale este OK, valoarea lui fiind: "+a.getValoareRataSolvabGenerala());
+end
+
+rule "Rata solvab. generale NEUTRU"
+   
+    when
+	i: IndicatorFinanciar() and
+	a:RataSolvabGenerala(indicatorFinanciar==i, valoareRataSolvabGenerala==1)
+    then
+       a.setTip(TipRataSolvabGenerala.NEUTRU);
+       System.out.println("6. Rata solvab. generale este NEUTRU, valoarea lui fiind: "+a.getValoareRataSolvabGenerala());
+end
+
+rule "Rata solvab. generale MIC"
+   
+    when
+	i: IndicatorFinanciar() and
+	a:RataSolvabGenerala(indicatorFinanciar==i, valoareRataSolvabGenerala<1)
+    then
+       a.setTip(TipRataSolvabGenerala.MIC);
+       System.out.println("6. Rata solvab. generale este MIC, valoarea lui fiind: "+a.getValoareRataSolvabGenerala());
+end
+
+rule "Exista posibilitatea de a calcula rata solvab. curente"
+    when
+        i: IndicatorFinanciar( cashFlow!=null, dobanziRate.size()>0, rateScadenteRambursare.size()>0 )
+    then
+    RataSolvabCurenta a = new RataSolvabCurenta(i);
+    a.setValoareRataSolvabCurenta();
+    
+    	insert(a);
+    	System.out.println();
+    	System.out.println("7.Cash Flow-ul, dobanzile si ratele sunt definite, deci se poate calcula rata solvab. curenta.");
+    	System.out.println("Suma dobanzilor: "+calculSuma(i.getDobanziRate()));
+    	System.out.println("Suma ratelor: "+calculSuma(i.getRateScadenteRambursare()));
+    	System.out.println("Cash Flow-ul: "+ i.getCashFlow());
+    	
+end
+
+rule "Rata solvab. curenta este un punct forte"
+   
+    when
+	i: IndicatorFinanciar() and
+	a:RataSolvabCurenta(indicatorFinanciar==i, valoareRataSolvabCurenta>3)
+    then
+       a.setTip(TipRataSolvabCurenta.PUNCT_FORTE);
+       System.out.println("8. Rata solvab. generale este un PUNCT FORTE, valoarea lui fiind: "+a.getValoareRataSolvabCurenta());
+end
+
+rule "Rata solvab. curenta este un punct slab"
+   
+    when
+	i: IndicatorFinanciar() and
+	a:RataSolvabCurenta(indicatorFinanciar==i, valoareRataSolvabCurenta<3)
+    then
+       a.setTip(TipRataSolvabCurenta.PUNCT_SLAB);
+       System.out.println("8. Rata solvab. generale este un PUNCT SLAB, valoarea lui fiind: "+a.getValoareRataSolvabCurenta());
+end
+
+rule "Exista posibilitatea de a calcula solvabilitatea dintr-o firma"
+    when
+        i: IndicatorFinanciar( dobanziRate.size()>0, rateScadenteRambursare.size()>0,conturiTotalDatorii.size()>0, conturiTotalActiv.size()>0,
+         conturiTotalCapitaluri.size()>0, conturiCapitalPropriu.size()>0, cashFlow != null)
+    then
+    Solvabilitate a = new Solvabilitate(i);
+    	insert(a);
+    	System.out.println();
+    	System.out.println("9.Toti parametrii sunt definiti, deci se poate calcula solvabilitatea.");  	
+end
+
+
+rule "Solvabilitatea este foarte buna"
+   
+    when
+    i: IndicatorFinanciar() and	
+	a:Solvabilitate(indicatorFinanciar==i) and
+	b:RataSolvabCurenta(indicatorFinanciar==i) and
+	RataSolvabCurenta(b.tip.equals(TipRataSolvabCurenta.PUNCT_FORTE)) and
+	c:RataSolvabPatrimoniala(indicatorFinanciar==i) and
+	RataSolvabPatrimoniala(c.tip.equals(TipRataSolvabPatrimoniala.MARE)) and
+	d:RataSolvabGenerala(indicatorFinanciar==i) and
+	RataSolvabGenerala(d.tip.equals(TipRataSolvabGenerala.OK)) and
+	e:ActivNetContabil(indicatorFinanciar==i) and
+	ActivNetContabil(e.tip.equals(TipActivNetContabil.POZITIV))
+    then
+     a.setTipSolvabilitate(TipSolvabilitate.FOARTE_BUNA);
+     System.out.println();
+     System.out.println("10.SOLVABILITATEA ESTE: "+a.getTipSolvabilitate()); 
+end
+
+rule "Solvabilitatea este buna"
+   
+    when
+    i: IndicatorFinanciar() and	
+    a:Solvabilitate(indicatorFinanciar==i) and
+	b:RataSolvabCurenta(indicatorFinanciar==i) and
+	RataSolvabCurenta(b.tip.equals(TipRataSolvabCurenta.PUNCT_SLAB )) and
+	c:RataSolvabPatrimoniala(indicatorFinanciar==i) and
+	RataSolvabPatrimoniala(c.tip.equals(TipRataSolvabPatrimoniala.MARE)) and
+	d:RataSolvabGenerala(indicatorFinanciar==i) and
+	RataSolvabGenerala(d.tip.equals(TipRataSolvabGenerala.OK)) and
+	e:ActivNetContabil(indicatorFinanciar==i) and
+	ActivNetContabil(e.tip.equals(TipActivNetContabil.POZITIV))
+
+    then
+     a.setTipSolvabilitate(TipSolvabilitate.BUNA);
+     System.out.println();
+     System.out.println("10.SOLVABILITATEA ESTE: "+a.getTipSolvabilitate()); 
+end
+
+rule "Solvabilitatea este medie"
+   
+    when
+	i: IndicatorFinanciar() and
+	a:Solvabilitate(indicatorFinanciar==i) and
+	b:RataSolvabCurenta(indicatorFinanciar==i) and
+	RataSolvabCurenta(b.tip.equals(TipRataSolvabCurenta.PUNCT_FORTE) || b.tip.equals(TipRataSolvabCurenta.PUNCT_SLAB )) and
+	c:RataSolvabPatrimoniala(indicatorFinanciar==i) and
+	RataSolvabPatrimoniala(c.tip.equals(TipRataSolvabPatrimoniala.OK)) and
+	d:RataSolvabGenerala(indicatorFinanciar==i) and
+	RataSolvabGenerala(d.tip.equals(TipRataSolvabGenerala.OK)) and
+	e:ActivNetContabil(indicatorFinanciar==i) and
+	ActivNetContabil(e.tip.equals(TipActivNetContabil.POZITIV))
+    then
+     a.setTipSolvabilitate(TipSolvabilitate.MEDIE);
+     System.out.println();
+     System.out.println("10.SOLVABILITATEA ESTE: "+a.getTipSolvabilitate()); 
+end
+
+rule "Solvabilitatea este slaba"
+   
+    when	
+    i: IndicatorFinanciar() and	
+	a:Solvabilitate(indicatorFinanciar==i) and
+	b:RataSolvabCurenta(indicatorFinanciar==i) and
+	RataSolvabCurenta(b.tip.equals(TipRataSolvabCurenta.PUNCT_SLAB )) and
+	c:RataSolvabPatrimoniala(indicatorFinanciar==i) and
+	RataSolvabPatrimoniala(c.tip.equals(TipRataSolvabPatrimoniala.MIC)) and
+	d:RataSolvabGenerala(indicatorFinanciar==i) and
+	RataSolvabGenerala(d.tip.equals(TipRataSolvabGenerala.NEUTRU)) and
+	e:ActivNetContabil(indicatorFinanciar==i) and
+	ActivNetContabil(e.tip.equals(TipActivNetContabil.NEUTRU))
+    then
+     a.setTipSolvabilitate(TipSolvabilitate.SLABA);
+     System.out.println();
+     System.out.println("10.SOLVABILITATEA ESTE: "+a.getTipSolvabilitate()); 
+end
+
+rule "Solvabilitatea este foarte slaba"
+   
+    when
+	i: IndicatorFinanciar() and	
+	a:Solvabilitate(indicatorFinanciar==i) and
+	b:RataSolvabCurenta(indicatorFinanciar==i) and
+	RataSolvabCurenta(b.tip.equals(TipRataSolvabCurenta.PUNCT_SLAB )) and
+	c:RataSolvabPatrimoniala(indicatorFinanciar==i) and
+	RataSolvabPatrimoniala(c.tip.equals(TipRataSolvabPatrimoniala.MIC)) and
+	d:RataSolvabGenerala(indicatorFinanciar==i) and
+	RataSolvabGenerala(d.tip.equals(TipRataSolvabGenerala.MIC)) and
+	e:ActivNetContabil(indicatorFinanciar==i) and
+	ActivNetContabil(e.tip.equals(TipActivNetContabil.NEGATIV))
+    then
+     a.setTipSolvabilitate(TipSolvabilitate.FOARTE_SLABA);
+     System.out.println();
+     System.out.println("10.SOLVABILITATEA ESTE: "+a.getTipSolvabilitate()); 
+end
+
+
+function double calculSuma(List listaConturi){
+	double suma=0.0;
+    for(Object c:listaConturi){
+    	suma+=((ContClient)c).getSuma();
+   	}
+   	
+   	return suma;
+}
