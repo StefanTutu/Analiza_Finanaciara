@@ -38,8 +38,8 @@ public class RataStabilitatiFinanciare {
 		return valoareRataStabilitatiiFinanciare;
 	}
 
-	public void setValoareRataStabilitatiiFinanciare(Double valoareRataStabilitatiiFinanciare) {
-		this.valoareRataStabilitatiiFinanciare = valoareRataStabilitatiiFinanciare;
+	public void setValoareRataStabilitatiiFinanciare() {
+		this.valoareRataStabilitatiiFinanciare = formulaCalcul();
 	}
 
 	public double formulaCalcul() {

@@ -38,8 +38,8 @@ public class RataDeIndatorareGobale {
 		return valaoreRataDeIndatorareGobale;
 	}
 
-	public void setValaoreRataDeIndatorareGobale(Double valaoreRataDeIndatorareGobale) {
-		this.valaoreRataDeIndatorareGobale = valaoreRataDeIndatorareGobale;
+	public void setValaoreRataDeIndatorareGobale() {
+		this.valaoreRataDeIndatorareGobale = formulaCalcul();
 	}
 	
 	public double formulaCalcul() {

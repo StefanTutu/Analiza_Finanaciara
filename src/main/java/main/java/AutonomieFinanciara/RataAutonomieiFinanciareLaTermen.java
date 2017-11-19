@@ -38,8 +38,12 @@ public class RataAutonomieiFinanciareLaTermen {
 		return valaoreRataAutomieiFinanciareLaTermen;
 	}
 
-	public void setValaoreRataAutomieiFinanciareLaTermen(Double valaoreRataAutomieiFinanciareLaTermen) {
-		this.valaoreRataAutomieiFinanciareLaTermen = valaoreRataAutomieiFinanciareLaTermen;
+	public void setValaoreRataAutomieiFinanciareLaTermen1() {
+		this.valaoreRataAutomieiFinanciareLaTermen = formulaCalcul1();
+	}
+	
+	public void setValaoreRataAutomieiFinanciareLaTermen2() {
+		this.valaoreRataAutomieiFinanciareLaTermen = formulaCalcul2();
 	}
 
 	public double formulaCalcul1() {

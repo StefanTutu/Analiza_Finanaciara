@@ -31,8 +31,8 @@ public class NumarulDeRotatiiAferenteStocurilor {
 	public Double getValoareNumarulDeRotatiiAferenteStocurilor() {
 		return valoareNumarulDeRotatiiAferenteStocurilor;
 	}
-	public void setValoareNumarulDeRotatiiAferenteStocurilor(Double valoareNumarulDeRotatiiAferenteStocurilor) {
-		this.valoareNumarulDeRotatiiAferenteStocurilor = valoareNumarulDeRotatiiAferenteStocurilor;
+	public void setValoareNumarulDeRotatiiAferenteStocurilor( ) {
+		this.valoareNumarulDeRotatiiAferenteStocurilor = formulaCalcul();
 	}
 	
 	public double formulaCalcul() {

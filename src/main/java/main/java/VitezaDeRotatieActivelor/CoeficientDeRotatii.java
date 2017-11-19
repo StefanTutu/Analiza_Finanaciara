@@ -38,8 +38,8 @@ public class CoeficientDeRotatii {
 		return valoareCoeficientDeRotatii;
 	}
 
-	public void setValoareCoeficientDeRotatii(Double valoareCoeficientDeRotatii) {
-		this.valoareCoeficientDeRotatii = valoareCoeficientDeRotatii;
+	public void setValoareCoeficientDeRotatii() {
+		this.valoareCoeficientDeRotatii = formulaCalcul();
 	}
 	
 	public double formulaCalcul() {

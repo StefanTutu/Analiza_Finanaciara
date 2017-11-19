@@ -38,8 +38,8 @@ public class RataAutonomieiFinanciareGlobale {
 		return valoareRataAutonomieiFinanciareGlobale;
 	}
 
-	public void setValoareRataAutonomieiFinanciareGlobale(Double valoareRataAutonomieiFinanciareGlobale) {
-		this.valoareRataAutonomieiFinanciareGlobale = valoareRataAutonomieiFinanciareGlobale;
+	public void setValoareRataAutonomieiFinanciareGlobale() {
+		this.valoareRataAutonomieiFinanciareGlobale = formulaCalcul();
 	}
 
 	public double formulaCalcul() {

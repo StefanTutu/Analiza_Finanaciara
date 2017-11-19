@@ -37,8 +37,19 @@ public class RateleDeRotatie {
 		return vitezaInZile;
 	}
 
-	public void setVitezaInZile(Double vitezaInZile) {
-		this.vitezaInZile = vitezaInZile;
+	public void setVitezaInZileFormula90zile1( ) {
+		this.vitezaInZile = formulaCalcul90zile1();
+	}
+	
+	public void setVitezaInZileFormula360zile1( ) {
+		this.vitezaInZile = formulaCalcul360zile1();
+	}
+	
+	public void setVitezaInZileFormula90zile2( ) {
+		this.vitezaInZile = formulaCalcul90zile2();
+	}
+	public void setVitezaInZileFormula360zile2( ) {
+		this.vitezaInZile = formulaCalcul360zile2();
 	}
 
 	public double formulaCalcul90zile1() {

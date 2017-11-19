@@ -38,8 +38,8 @@ public class RataDatoriilorPeTermenScurt {
 		return valaoreRataDatoriilorPeTermenScurt;
 	}
 
-	public void setValaoreRataDatoriilorPeTermenScurt(Double valaoreRataDatoriilorPeTermenScurt) {
-		this.valaoreRataDatoriilorPeTermenScurt = valaoreRataDatoriilorPeTermenScurt;
+	public void setValaoreRataDatoriilorPeTermenScurt() {
+		this.valaoreRataDatoriilorPeTermenScurt = formulaCalcul();
 	}
 
 	public double formulaCalcul() {
