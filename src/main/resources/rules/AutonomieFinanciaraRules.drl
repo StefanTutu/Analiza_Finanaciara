@@ -17,8 +17,8 @@ rule "Exista posibilitatea de a calcula rata stabilitatii financiare "
         r.setValoareRataStabilitatiiFinanciare();
        		insert(r);
        		System.out.println("11. Exista posibilitatea de a calcula rata stabilitatii financiare");
-    		System.out.println("Suma conturilor capitalulul permanent : "+calculSuma(i.getConturiCapitalPermanent()));
-    		System.out.println("Suma conturilor de pasiv total: "+calculSuma(i.getConturiPasivTotal()));
+    		System.out.println("Suma conturilor capitalulul permanent : "+calculSumaA(i.getConturiCapitalPermanent()));
+    		System.out.println("Suma conturilor de pasiv total: "+calculSumaA(i.getConturiPasivTotal()));
 end
 
 rule "Rata stabilitatii financiare este slaba"
@@ -61,8 +61,8 @@ rule "Exista posibilitatea de a calcula rata autonomiei financiare globale "
         r.setValoareRataAutonomieiFinanciareGlobale();
        		insert(r);
        		System.out.println("13. Exista posibilitatea de a calcula rata autonomiei financiare globale");
-    		System.out.println("Suma conturilor capitalulul propriu : "+calculSuma(i.getConturiCapitalPropriu()));
-    		System.out.println("Suma conturilor de pasiv total: "+calculSuma(i.getConturiPasivTotal()));
+    		System.out.println("Suma conturilor capitalulul propriu : "+calculSumaA(i.getConturiCapitalPropriu()));
+    		System.out.println("Suma conturilor de pasiv total: "+calculSumaA(i.getConturiPasivTotal()));
 end
 
 rule "Rata autonomiei financiare globale este slaba"
@@ -105,8 +105,8 @@ rule "Exista posibilitatea de a calcula rata autonomiei financiare la termen pri
         r.setValaoreRataAutomieiFinanciareLaTermen1();
        		insert(r);
        		System.out.println("15. Exista posibilitatea de a calcula rata autonomiei financiare la termen prin formula 1");
-    		System.out.println("Suma conturilor capitalulul propriu : "+calculSuma(i.getConturiCapitalPropriu()));
-    		System.out.println("Suma conturilor de capital permanent: "+calculSuma(i.getConturiCapitalPermanent()));
+    		System.out.println("Suma conturilor capitalulul propriu : "+calculSumaA(i.getConturiCapitalPropriu()));
+    		System.out.println("Suma conturilor de capital permanent: "+calculSumaA(i.getConturiCapitalPermanent()));
 end
 
 rule "Rata autonomiei financiare la termen prin formula 1 este slaba"
@@ -148,8 +148,8 @@ rule "Exista posibilitatea de a calcula rata autonomiei financiare la termen pri
         r.setValaoreRataAutomieiFinanciareLaTermen2();
        		insert(r);
        		System.out.println("17. Exista posibilitatea de a calcula rata autonomiei financiare la termen prin formula 2");
-    		System.out.println("Suma conturilor capitalulul propriu : "+calculSuma(i.getConturiCapitalPropriu()));
-    		System.out.println("Suma conturilor datorii pe termen lung: "+calculSuma(i.getConturiDatoriiPeTermenLung()));
+    		System.out.println("Suma conturilor capitalulul propriu : "+calculSumaA(i.getConturiCapitalPropriu()));
+    		System.out.println("Suma conturilor datorii pe termen lung: "+calculSumaA(i.getConturiDatoriiPeTermenLung()));
 end
 
 rule "Rata autonomiei financiare la termen prin formula 2 este slaba"
@@ -192,8 +192,8 @@ rule "Exista posibilitatea de a calcula rata datoriilor pe termen scurt"
         r.setValaoreRataDatoriilorPeTermenScurt();
        		insert(r);
        		System.out.println("19. Exista posibilitatea de a calcula rata datoriilor pe termen scurt");
-    		System.out.println("Suma conturilor de datorii pe termen lung : "+calculSuma(i.getConturiDatoriiPeTermenLung()));
-    		System.out.println("Suma conturilor de pasiv total: "+calculSuma(i.getConturiPasivTotal()));
+    		System.out.println("Suma conturilor de datorii pe termen lung : "+calculSumaA(i.getConturiDatoriiPeTermenLung()));
+    		System.out.println("Suma conturilor de pasiv total: "+calculSumaA(i.getConturiPasivTotal()));
 end
 
 rule "Rata datoriilor pe termen scurt este slaba"
@@ -236,8 +236,8 @@ rule "Exista posibilitatea de a calcula rata de indatorare globala"
         r.setValaoreRataDeIndatorareGobale();
        		insert(r);
        		System.out.println("21. Exista posibilitatea de a calcula rata de indatorare globala");
-    		System.out.println("Suma conturilor de datorii pe termen lung : "+calculSuma(i.getConturiTotalDatorii()));
-    		System.out.println("Suma conturilor de pasiv total: "+calculSuma(i.getConturiPasivTotal()));
+    		System.out.println("Suma conturilor de datorii pe termen lung : "+calculSumaA(i.getConturiTotalDatorii()));
+    		System.out.println("Suma conturilor de pasiv total: "+calculSumaA(i.getConturiPasivTotal()));
 end
 
 rule "Rata de indatorare globala este slaba"
@@ -271,7 +271,7 @@ end
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-function double calculSuma(List listaConturi){
+function double calculSumaA(List listaConturi){
 	double suma=0.0;
     for(Object c:listaConturi){
     	suma+=((ContClient)c).getSuma();

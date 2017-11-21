@@ -51,7 +51,51 @@ public class IndicatorFinanciar {
 		this.dobanziRate = dobanziRate;
 		this.cashFlow = cashFlow;
 	}
-
+	
+	//Constructor Autonomie
+	public IndicatorFinanciar(Long id, String denumire, List<ContClient> conturiTotalDatorii,
+			List<ContClient> conturiTotalActiv, List<ContClient> conturiCapitalPropriu,
+			List<ContClient> conturiCapitalPermanent, List<ContClient> conturiPasivTotal,
+			List<ContClient> conturiDatoriiPeTermenLung) {
+		super();
+		this.id = id;
+		this.denumire = denumire;
+		this.conturiTotalDatorii = conturiTotalDatorii;
+		this.conturiTotalActiv = conturiTotalActiv;
+		this.conturiCapitalPropriu = conturiCapitalPropriu;
+		this.conturiCapitalPermanent = conturiCapitalPermanent;
+		this.conturiPasivTotal = conturiPasivTotal;
+		this.conturiDatoriiPeTermenLung = conturiDatoriiPeTermenLung;
+	}
+	
+	//COnstructor ALL
+	public IndicatorFinanciar(Long id, String denumire, List<ContClient> conturiTotalDatorii,
+			List<ContClient> conturiTotalActiv, List<ContClient> conturiCapitalPropriu,
+			List<ContClient> conturiTotalCapitaluri, List<ContClient> rateScadenteRambursare,
+			List<ContClient> dobanziRate, Double cashFlow, 
+			//List<ContClient> conturiTotalDatorii,
+			//List<ContClient> conturiTotalActiv, 
+			//List<ContClient> conturiCapitalPropriu,
+			List<ContClient> conturiCapitalPermanent, List<ContClient> conturiPasivTotal,
+			List<ContClient> conturiDatoriiPeTermenLung) {
+		super();
+		this.id = id;
+		this.denumire = denumire;
+		this.conturiTotalDatorii = conturiTotalDatorii;
+		this.conturiTotalActiv = conturiTotalActiv;
+		this.conturiCapitalPropriu = conturiCapitalPropriu;
+		this.conturiTotalCapitaluri = conturiTotalCapitaluri;
+		this.rateScadenteRambursare = rateScadenteRambursare;
+		this.dobanziRate = dobanziRate;
+		this.cashFlow = cashFlow;
+		
+		//this.conturiTotalDatorii = conturiTotalDatorii;
+		//this.conturiTotalActiv = conturiTotalActiv;
+		//this.conturiCapitalPropriu = conturiCapitalPropriu;
+		this.conturiCapitalPermanent = conturiCapitalPermanent;
+		this.conturiPasivTotal = conturiPasivTotal;
+		this.conturiDatoriiPeTermenLung = conturiDatoriiPeTermenLung;
+	}
 	public Long getId() {
 		return id;
 	}
