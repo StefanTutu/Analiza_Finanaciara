@@ -8,6 +8,17 @@ import com.sample.ContClient;
 public class IndicatorFinanciar {
 	private Long id;
 	private String denumire;
+	
+	//Lichiditate
+	private List<ContClient> conturiActiveCirculante= new ArrayList<ContClient>();
+	private List<ContClient> conturiDatoriiCurente = new ArrayList<ContClient>();
+	private List<ContClient> conturiStocuri = new ArrayList<ContClient>();
+	private List<ContClient> conturiInvestitiiFinanciarePeTermenScurt = new ArrayList<ContClient>();
+	private List<ContClient> creante = new ArrayList<ContClient>();
+	private List<ContClient> conturiDisponibilitatiBanestiDinCasierie = new ArrayList<ContClient>();
+	private List<ContClient> conturiBancare = new ArrayList<ContClient>();
+	private List<ContClient> conturiCrediteBancarePeTermenScurt = new ArrayList<ContClient>();
+	
 
 	// Solvabilitate
 	private List<ContClient> conturiTotalDatorii = new ArrayList<ContClient>();
@@ -34,6 +45,26 @@ public class IndicatorFinanciar {
 	
 	public IndicatorFinanciar() {
 	}
+	
+	//Constructor Lichiditate
+	public IndicatorFinanciar(Long id, String denumire, List<ContClient> conturiActiveCirculante,
+			List<ContClient> conturiDatoriiCurente, List<ContClient> conturiStocuri,
+			List<ContClient> conturiInvestitiiFinanciarePeTermenScurt, List<ContClient> creante,
+			List<ContClient> conturiDisponibilitatiBanestiDinCasierie, List<ContClient> conturiBancare,
+			List<ContClient> conturiCrediteBancarePeTermenScurt) {
+		super();
+		this.id = id;
+		this.denumire = denumire;
+		this.conturiActiveCirculante = conturiActiveCirculante;
+		this.conturiDatoriiCurente = conturiDatoriiCurente;
+		this.conturiStocuri = conturiStocuri;
+		this.conturiInvestitiiFinanciarePeTermenScurt = conturiInvestitiiFinanciarePeTermenScurt;
+		this.creante = creante;
+		this.conturiDisponibilitatiBanestiDinCasierie = conturiDisponibilitatiBanestiDinCasierie;
+		this.conturiBancare = conturiBancare;
+		this.conturiCrediteBancarePeTermenScurt = conturiCrediteBancarePeTermenScurt;
+	}
+	
 
 	//Constructor Solvabilitate
 	public IndicatorFinanciar(Long id, String denumire, List<ContClient> conturiTotalDatorii,
@@ -52,6 +83,7 @@ public class IndicatorFinanciar {
 		this.cashFlow = cashFlow;
 	}
 	
+
 	//Constructor Autonomie
 	public IndicatorFinanciar(Long id, String denumire, List<ContClient> conturiTotalDatorii,
 			List<ContClient> conturiTotalActiv, List<ContClient> conturiCapitalPropriu,
@@ -67,20 +99,32 @@ public class IndicatorFinanciar {
 		this.conturiPasivTotal = conturiPasivTotal;
 		this.conturiDatoriiPeTermenLung = conturiDatoriiPeTermenLung;
 	}
-	
-	//COnstructor ALL
-	public IndicatorFinanciar(Long id, String denumire, List<ContClient> conturiTotalDatorii,
-			List<ContClient> conturiTotalActiv, List<ContClient> conturiCapitalPropriu,
-			List<ContClient> conturiTotalCapitaluri, List<ContClient> rateScadenteRambursare,
-			List<ContClient> dobanziRate, Double cashFlow, 
-			//List<ContClient> conturiTotalDatorii,
-			//List<ContClient> conturiTotalActiv, 
-			//List<ContClient> conturiCapitalPropriu,
-			List<ContClient> conturiCapitalPermanent, List<ContClient> conturiPasivTotal,
-			List<ContClient> conturiDatoriiPeTermenLung) {
+	//Constructor ALL
+	public IndicatorFinanciar(Long id, String denumire, List<ContClient> conturiActiveCirculante,
+			List<ContClient> conturiDatoriiCurente, List<ContClient> conturiStocuri,
+			List<ContClient> conturiInvestitiiFinanciarePeTermenScurt, List<ContClient> creante,
+			List<ContClient> conturiDisponibilitatiBanestiDinCasierie, List<ContClient> conturiBancare,
+			List<ContClient> conturiCrediteBancarePeTermenScurt, 
+			 List<ContClient> conturiTotalDatorii,
+				List<ContClient> conturiTotalActiv, List<ContClient> conturiCapitalPropriu,
+				List<ContClient> conturiTotalCapitaluri, List<ContClient> rateScadenteRambursare,
+				List<ContClient> dobanziRate, Double cashFlow, 
+				//List<ContClient> conturiTotalDatorii,
+				//List<ContClient> conturiTotalActiv, 
+				//List<ContClient> conturiCapitalPropriu,
+				List<ContClient> conturiCapitalPermanent, List<ContClient> conturiPasivTotal,
+				List<ContClient> conturiDatoriiPeTermenLung) {
 		super();
 		this.id = id;
 		this.denumire = denumire;
+		this.conturiActiveCirculante = conturiActiveCirculante;
+		this.conturiDatoriiCurente = conturiDatoriiCurente;
+		this.conturiStocuri = conturiStocuri;
+		this.conturiInvestitiiFinanciarePeTermenScurt = conturiInvestitiiFinanciarePeTermenScurt;
+		this.creante = creante;
+		this.conturiDisponibilitatiBanestiDinCasierie = conturiDisponibilitatiBanestiDinCasierie;
+		this.conturiBancare = conturiBancare;
+		this.conturiCrediteBancarePeTermenScurt = conturiCrediteBancarePeTermenScurt;
 		this.conturiTotalDatorii = conturiTotalDatorii;
 		this.conturiTotalActiv = conturiTotalActiv;
 		this.conturiCapitalPropriu = conturiCapitalPropriu;
@@ -88,14 +132,21 @@ public class IndicatorFinanciar {
 		this.rateScadenteRambursare = rateScadenteRambursare;
 		this.dobanziRate = dobanziRate;
 		this.cashFlow = cashFlow;
-		
-		//this.conturiTotalDatorii = conturiTotalDatorii;
-		//this.conturiTotalActiv = conturiTotalActiv;
-		//this.conturiCapitalPropriu = conturiCapitalPropriu;
 		this.conturiCapitalPermanent = conturiCapitalPermanent;
 		this.conturiPasivTotal = conturiPasivTotal;
 		this.conturiDatoriiPeTermenLung = conturiDatoriiPeTermenLung;
+		this.conturiCifraDeAfaceri = conturiCifraDeAfaceri;
+		this.conturiCapitaluriCirculante = conturiCapitaluriCirculante;
+		this.conturiStocGlobalMediu = conturiStocGlobalMediu;
+		this.numarDeRotatii = numarDeRotatii;
+		this.stocuriMedii = stocuriMedii;
+		this.bazaDeCalcul = bazaDeCalcul;
 	}
+	
+	
+	
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -110,6 +161,70 @@ public class IndicatorFinanciar {
 
 	public void setDenumire(String denumire) {
 		this.denumire = denumire;
+	}
+
+	public List<ContClient> getConturiActiveCirculante() {
+		return conturiActiveCirculante;
+	}
+
+	public void setConturiActiveCirculante(List<ContClient> conturiActiveCirculante) {
+		this.conturiActiveCirculante = conturiActiveCirculante;
+	}
+
+	public List<ContClient> getConturiDatoriiCurente() {
+		return conturiDatoriiCurente;
+	}
+
+	public void setConturiDatoriiCurente(List<ContClient> conturiDatoriiCurente) {
+		this.conturiDatoriiCurente = conturiDatoriiCurente;
+	}
+
+	public List<ContClient> getConturiStocuri() {
+		return conturiStocuri;
+	}
+
+	public void setConturiStocuri(List<ContClient> conturiStocuri) {
+		this.conturiStocuri = conturiStocuri;
+	}
+
+	public List<ContClient> getConturiInvestitiiFinanciarePeTermenScurt() {
+		return conturiInvestitiiFinanciarePeTermenScurt;
+	}
+
+	public void setConturiInvestitiiFinanciarePeTermenScurt(List<ContClient> conturiInvestitiiFinanciarePeTermenScurt) {
+		this.conturiInvestitiiFinanciarePeTermenScurt = conturiInvestitiiFinanciarePeTermenScurt;
+	}
+
+	public List<ContClient> getCreante() {
+		return creante;
+	}
+
+	public void setCreante(List<ContClient> creante) {
+		this.creante = creante;
+	}
+
+	public List<ContClient> getConturiDisponibilitatiBanestiDinCasierie() {
+		return conturiDisponibilitatiBanestiDinCasierie;
+	}
+
+	public void setConturiDisponibilitatiBanestiDinCasierie(List<ContClient> conturiDisponibilitatiBanestiDinCasierie) {
+		this.conturiDisponibilitatiBanestiDinCasierie = conturiDisponibilitatiBanestiDinCasierie;
+	}
+
+	public List<ContClient> getConturiBancare() {
+		return conturiBancare;
+	}
+
+	public void setConturiBancare(List<ContClient> conturiBancare) {
+		this.conturiBancare = conturiBancare;
+	}
+
+	public List<ContClient> getConturiCrediteBancarePeTermenScurt() {
+		return conturiCrediteBancarePeTermenScurt;
+	}
+
+	public void setConturiCrediteBancarePeTermenScurt(List<ContClient> conturiCrediteBancarePeTermenScurt) {
+		this.conturiCrediteBancarePeTermenScurt = conturiCrediteBancarePeTermenScurt;
 	}
 
 	public List<ContClient> getConturiTotalDatorii() {
