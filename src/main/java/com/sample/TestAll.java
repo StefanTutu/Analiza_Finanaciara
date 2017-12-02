@@ -9,6 +9,7 @@ import org.kie.api.runtime.KieSession;
 
 public class TestAll {
 
+	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 
 		// load up the knowledge base
@@ -69,7 +70,7 @@ public class TestAll {
 		List<ContClient> conturiCapitalPermanent = new ArrayList<ContClient>();
 		conturiCapitalPermanent.add(capitalPermanent1);
 		// Pasiv total
-		
+
 		ContClient pasivTotal1 = new ContClient(800L, "Pasiv Total 1", 1000.0);
 		List<ContClient> conturiPasivTotal = new ArrayList<ContClient>();
 		conturiPasivTotal.add(pasivTotal1);
@@ -176,16 +177,12 @@ public class TestAll {
 		conturiCrediteBancarePeTermenScurt.add(crediteBancarePeTermenScurt);
 
 		IndicatorFinanciar test = new IndicatorFinanciar(1003L, "Autonomie Financiara si Solvabilitate si Lichidate",
-				conturiActiveCirculante,
-				conturiDatoriiCurente,conturiStocuri,
-				conturiInvestitiiFinanciarePeTermenScurt, creante,
-				conturiDisponibilitatiBanestiDinCasierie,conturiBancare,
-				conturiCrediteBancarePeTermenScurt,
-				conturiTotalDatorii, conturiTotalActiv, conturiCapitalPropriu, conturiTotalCapitaluri,
-				rateScadenteRambursare, dobanziRate, cashFlow, conturiCapitalPermanent, conturiDatoriiTotaleAutonomie,
-				conturiDatoriiPeTermenLungAutonomie);
-	
-		
+				conturiActiveCirculante, conturiDatoriiCurente, conturiStocuri,
+				conturiInvestitiiFinanciarePeTermenScurt, creante, conturiDisponibilitatiBanestiDinCasierie,
+				conturiBancare, conturiCrediteBancarePeTermenScurt, conturiTotalDatorii, conturiTotalActiv,
+				conturiCapitalPropriu, conturiTotalCapitaluri, rateScadenteRambursare, dobanziRate, cashFlow,
+				conturiCapitalPermanent, conturiDatoriiTotaleAutonomie, conturiDatoriiPeTermenLungAutonomie);
+
 		kSession.insert(test);
 		kSession.fireAllRules();
 

@@ -16,8 +16,8 @@ rule "Lichiditata generala "
        r.setValoareRataLichidGenerala();
        insert(r);
        System.out.println("Se poate calcula rata lichiditatii generale ");
-       System.out.println("Valoarea ACTIVELOR CIRCULANTE : "+calculSumaA(i.getConturiActiveCirculante()));
-       System.out.println("Valoarea DATORIILOR CURENTE: "+calculSumaA(i.getConturiDatoriiCurente()));
+       System.out.println("Valoarea ACTIVELOR CIRCULANTE : "+calculSumaL(i.getConturiActiveCirculante()));
+       System.out.println("Valoarea DATORIILOR CURENTE: "+calculSumaL(i.getConturiDatoriiCurente()));
 end
 
 rule "Rata lichiditatii generale este NESATISFACATOARE"
@@ -60,8 +60,8 @@ rule "Lichiditata IMEDIATA "
        r.setValoareRataLichidImediata();
        insert(r);
        System.out.println("Se poate calcula rata lichiditatii imediate ");
-       System.out.println("Valoarea INVESTITIILOR FINANCIARE PE TERMEN SCURT: "+calculSumaA(i.getConturiInvestitiiFinanciarePeTermenScurt()));
-       System.out.println("Valoarea DATORIILOR PE TERMEN SCURT: "+calculSumaA(i.getConturiDatoriiCurente()));
+       System.out.println("Valoarea INVESTITIILOR FINANCIARE PE TERMEN SCURT: "+calculSumaL(i.getConturiInvestitiiFinanciarePeTermenScurt()));
+       System.out.println("Valoarea DATORIILOR PE TERMEN SCURT: "+calculSumaL(i.getConturiDatoriiCurente()));
 end
 
 rule "Rata lichiditatii IMEDIATE este NESATISFACATOARE"
@@ -106,9 +106,9 @@ rule "Lichiditata INTERMEDIARA "
        r.setValoareRataLichidIntermediara();
        insert(r);
        System.out.println("Se poate calcula rata lichiditatii INTERMEDIARE ");
-       System.out.println("Valoarea ACTIVELOR CIRCULANTE este: "+calculSumaA(i.getConturiActiveCirculante()));
-       System.out.println("Valoarea STOCURILOR CURENTE este de: "+calculSumaA(i.getConturiStocuri()));
-       System.out.println("Valoarea DATORIILOR PE TERMEN SCURT: "+calculSumaA(i.getConturiDatoriiCurente()));
+       System.out.println("Valoarea ACTIVELOR CIRCULANTE este: "+calculSumaL(i.getConturiActiveCirculante()));
+       System.out.println("Valoarea STOCURILOR CURENTE este de: "+calculSumaL(i.getConturiStocuri()));
+       System.out.println("Valoarea DATORIILOR PE TERMEN SCURT: "+calculSumaL(i.getConturiDatoriiCurente()));
 end
 
 rule "Rata lichiditatii INTERMEDIARE este NESATISFACATOARE"
@@ -155,9 +155,9 @@ rule "Lichiditata RAPIDA "
        r.setValoareRataLichidRapida();
        insert(r);
        System.out.println("Se poate calcula rata lichiditatii RAPIDE ");
-       System.out.println("Valoarea CREANTELOR: "+calculSumaA(i.getCreante()));
-       System.out.println("Valoarea DISPONIBILITATILOR BANESTI DIN CASIERIE: "+calculSumaA(i.getConturiDisponibilitatiBanestiDinCasierie()));
-       System.out.println("Valoarea DATORIILOR PE TERMEN SCURT: "+calculSumaA(i.getConturiDatoriiCurente()));
+       System.out.println("Valoarea CREANTELOR: "+calculSumaL(i.getCreante()));
+       System.out.println("Valoarea DISPONIBILITATILOR BANESTI DIN CASIERIE: "+calculSumaL(i.getConturiDisponibilitatiBanestiDinCasierie()));
+       System.out.println("Valoarea DATORIILOR PE TERMEN SCURT: "+calculSumaL(i.getConturiDatoriiCurente()));
 end
 
 
@@ -204,9 +204,9 @@ rule "Lichiditata LA VEDERE "
        r.setValoareRataLichidLaVedere();
        insert(r);
        System.out.println("Se poate calcula rata lichiditatii La Vedere ");
-       System.out.println("Valoarea DISPONIBILITATILOR BANESTI DIN CASIERIE este: "+calculSumaA(i.getConturiDisponibilitatiBanestiDinCasierie()));
-       System.out.println("Valoarea DIN CONTURILE BANCARE este: "+calculSumaA(i.getConturiBancare()));
-       System.out.println("Valoarea CREDITELOR BANCARE PE TERMEN SCURT este de: "+calculSumaA(i.getConturiCrediteBancarePeTermenScurt()));
+       System.out.println("Valoarea DISPONIBILITATILOR BANESTI DIN CASIERIE este: "+calculSumaL(i.getConturiDisponibilitatiBanestiDinCasierie()));
+       System.out.println("Valoarea DIN CONTURILE BANCARE este: "+calculSumaL(i.getConturiBancare()));
+       System.out.println("Valoarea CREDITELOR BANCARE PE TERMEN SCURT este de: "+calculSumaL(i.getConturiCrediteBancarePeTermenScurt()));
 end
 
 rule "Rata lichiditatii LA VEDERE este NESATISFACATOARE"
@@ -239,3 +239,13 @@ rule "Rata lichiditatii LA VEDERE este FOARTE BUNA"
     r.setTip(TipLichiditate.FOARTE_BUNA);
     System.out.println("Rata LICHIDITATII LA VEDERE este FOARTE BUNA, valoarea sa fiind "+r.getValoareRataLichidLaVedere());
 end
+
+
+function double calculSumaL(List listaConturi){
+	double suma=0.0;
+    for(Object c:listaConturi){
+    	suma+=((ContClient)c).getSuma();
+   	}
+   	
+   	return suma;
+}
