@@ -39,9 +39,9 @@ public class IndicatorFinanciar {
 	private List<ContClient> conturiCifraDeAfaceri = new ArrayList<ContClient>();
 	private List<ContClient> conturiCapitaluriCirculante = new ArrayList<ContClient>();
 	private List<ContClient> conturiStocGlobalMediu = new ArrayList<ContClient>();
+	private Double bazaDeCalcul;
 	private Double numarDeRotatii;
 	private Double stocuriMedii;
-	private Double bazaDeCalcul;
 	
 	public IndicatorFinanciar() {
 	}
@@ -99,6 +99,18 @@ public class IndicatorFinanciar {
 		this.conturiPasivTotal = conturiPasivTotal;
 		this.conturiDatoriiPeTermenLung = conturiDatoriiPeTermenLung;
 	}
+	
+	//Constructor Viteza de rotatie a activelor
+	public IndicatorFinanciar(Long id, String denumire, List<ContClient> conturiCifraDeAfaceri,
+			List<ContClient> conturiCapitaluriCirculante, List<ContClient> conturiStocGlobalMediu) {
+		super();
+		this.id = id;
+		this.denumire = denumire;
+		this.conturiCifraDeAfaceri = conturiCifraDeAfaceri;
+		this.conturiCapitaluriCirculante = conturiCapitaluriCirculante;
+		this.conturiStocGlobalMediu = conturiStocGlobalMediu;
+	}
+	
 	//Constructor ALL
 	public IndicatorFinanciar(Long id, String denumire, List<ContClient> conturiActiveCirculante,
 			List<ContClient> conturiDatoriiCurente, List<ContClient> conturiStocuri,
@@ -113,7 +125,8 @@ public class IndicatorFinanciar {
 				//List<ContClient> conturiTotalActiv, 
 				//List<ContClient> conturiCapitalPropriu,
 				List<ContClient> conturiCapitalPermanent, List<ContClient> conturiPasivTotal,
-				List<ContClient> conturiDatoriiPeTermenLung) {
+				List<ContClient> conturiDatoriiPeTermenLung, List<ContClient> conturiCifraDeAfaceri,
+				List<ContClient> conturiCapitaluriCirculante, List<ContClient> conturiStocGlobalMediu) {
 		super();
 		this.id = id;
 		this.denumire = denumire;
@@ -138,15 +151,20 @@ public class IndicatorFinanciar {
 		this.conturiCifraDeAfaceri = conturiCifraDeAfaceri;
 		this.conturiCapitaluriCirculante = conturiCapitaluriCirculante;
 		this.conturiStocGlobalMediu = conturiStocGlobalMediu;
-		this.numarDeRotatii = numarDeRotatii;
-		this.stocuriMedii = stocuriMedii;
-		this.bazaDeCalcul = bazaDeCalcul;
 	}
 	
 	
 	
 	
 	
+	public Double getNumarDeRotatii() {
+		return numarDeRotatii;
+	}
+
+	public void setNumarDeRotatii(Double numarDeRotatii) {
+		this.numarDeRotatii = numarDeRotatii;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -331,12 +349,13 @@ public class IndicatorFinanciar {
 		this.conturiStocGlobalMediu = conturiStocGlobalMediu;
 	}
 
-	public Double getNumarDeRotatii() {
-		return numarDeRotatii;
+
+	public Double getBazaDeCalcul() {
+		return bazaDeCalcul;
 	}
 
-	public void setNumarDeRotatii(Double numarDeRotatii) {
-		this.numarDeRotatii = numarDeRotatii;
+	public void setBazaDeCalcul(Double bazaDeCalcul) {
+		this.bazaDeCalcul = bazaDeCalcul;
 	}
 
 	public Double getStocuriMedii() {
@@ -347,13 +366,4 @@ public class IndicatorFinanciar {
 		this.stocuriMedii = stocuriMedii;
 	}
 
-	public Double getBazaDeCalcul() {
-		return bazaDeCalcul;
-	}
-
-	public void setBazaDeCalcul(Double bazaDeCalcul) {
-		this.bazaDeCalcul = bazaDeCalcul;
-	}
-
-	
 }
