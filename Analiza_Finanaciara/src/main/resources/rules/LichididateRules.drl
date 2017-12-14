@@ -1,0 +1,251 @@
+//created on: Nov 18, 2017
+package rules
+
+//list any import classes here.
+import main.java.Lichiditate.*;
+import com.sample.*;
+import java.util.*;
+
+
+rule "Lichiditata generala "
+
+    when
+       i: IndicatorFinanciar(conturiActiveCirculante.size()>0, conturiDatoriiCurente.size()>0)
+    then
+       RataLichidGenerala r= new RataLichidGenerala(i);
+       r.setValoareRataLichidGenerala();
+       insert(r);
+       System.out.println("Se poate calcula rata lichiditatii generale ");
+       System.out.println("Valoarea ACTIVELOR CIRCULANTE : "+calculSumaL(i.getConturiActiveCirculante()));
+       System.out.println("Valoarea DATORIILOR CURENTE: "+calculSumaL(i.getConturiDatoriiCurente()));
+end
+
+rule "Rata lichiditatii generale este NESATISFACATOARE"
+    
+    when
+       i: IndicatorFinanciar() and 
+       r: RataLichidGenerala(indicatorFinanciar == i, ValoareRataLichidGenerala<1.2 )
+    then
+    r.setTip(TipLichiditate.NESATISFACATOARE);
+    System.out.println("Rata LICHIDITATII GENERALE este nesatisfacatoare, valoarea sa fiind "+r.getValoareRataLichidGenerala());
+end
+
+rule "Rata lichiditatii generale este SATISFACATOARE"
+    when
+     i: IndicatorFinanciar() and 
+     r: RataLichidGenerala(indicatorFinanciar == i, ValoareRataLichidGenerala>=1.2 && ValoareRataLichidGenerala<1.8 )
+    then
+    r.setTip(TipLichiditate.SATISFACATOARE);
+    System.out.println("Rata LICHIDITATII GENERALE este SATISFACATOARE, valoarea sa fiind "+r.getValoareRataLichidGenerala());
+end
+
+
+rule "Rata LICHIDITATII GENERALE este Foarte BUNA"
+    when
+     i: IndicatorFinanciar() and 
+     r: RataLichidGenerala(indicatorFinanciar == i, ValoareRataLichidGenerala>=1.8 && ValoareRataLichidGenerala<=2 )
+    then
+    r.setTip(TipLichiditate.FOARTE_BUNA);
+    System.out.println("Rata LICHIDITATII GENERALE este FOARTE BUNA, valoarea sa fiind "+r.getValoareRataLichidGenerala());
+end
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+rule "Lichiditata IMEDIATA "
+
+    when
+       i: IndicatorFinanciar(ConturiInvestitiiFinanciarePeTermenScurt.size()>0, ConturiDatoriiCurente.size()>0)
+    then
+       RataLichidImediata r= new RataLichidImediata(i);
+       r.setValoareRataLichidImediata();
+       insert(r);
+       System.out.println("Se poate calcula rata lichiditatii imediate ");
+       System.out.println("Valoarea INVESTITIILOR FINANCIARE PE TERMEN SCURT: "+calculSumaL(i.getConturiInvestitiiFinanciarePeTermenScurt()));
+       System.out.println("Valoarea DATORIILOR PE TERMEN SCURT: "+calculSumaL(i.getConturiDatoriiCurente()));
+end
+
+rule "Rata lichiditatii IMEDIATE este NESATISFACATOARE"
+    
+    when
+       i: IndicatorFinanciar() and 
+       r: RataLichidImediata(indicatorFinanciar == i, ValoareRataLichidImediata>0.65 || ValoareRataLichidImediata<0.35 )
+    then
+    r.setTip(TipLichiditate.NESATISFACATOARE);
+    System.out.println("Rata LICHIDITATII IMEDIATE este nesatisfacatoare, valoarea sa fiind "+r.getValoareRataLichidImediata());
+end
+
+rule "Rata lichiditatii IMEDIATE este SATISFACATOARE"
+    
+    when
+       i: IndicatorFinanciar() and 
+       r: RataLichidImediata(indicatorFinanciar == i, ValoareRataLichidImediata<0.65 || ValoareRataLichidImediata>=0.35 )
+    then
+    r.setTip(TipLichiditate.SATISFACATOARE);
+    System.out.println("Rata LICHIDITATII IMEDIATE este satisfacatoare, valoarea sa fiind "+r.getValoareRataLichidImediata());
+end
+
+
+rule "Rata LICHIDITATII IMEDIATE este Foarte BUNA"
+    when
+     i: IndicatorFinanciar() and 
+     r: RataLichidImediata(indicatorFinanciar == i, ValoareRataLichidImediata==1)
+    then
+    r.setTip(TipLichiditate.FOARTE_BUNA);
+    System.out.println("Rata LICHIDITATII IMEDIATE este FOARTE BUNA, valoarea sa fiind "+r.getValoareRataLichidImediata());
+end
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+rule "Lichiditata INTERMEDIARA "
+
+    when
+       i: IndicatorFinanciar(ConturiActiveCirculante.size()>0,ConturiStocuri.size()>0,ConturiDatoriiCurente.size()>0)
+    then
+       RataLichidIntermediara r= new RataLichidIntermediara(i);
+       r.setValoareRataLichidIntermediara();
+       insert(r);
+       System.out.println("Se poate calcula rata lichiditatii INTERMEDIARE ");
+       System.out.println("Valoarea ACTIVELOR CIRCULANTE este: "+calculSumaL(i.getConturiActiveCirculante()));
+       System.out.println("Valoarea STOCURILOR CURENTE este de: "+calculSumaL(i.getConturiStocuri()));
+       System.out.println("Valoarea DATORIILOR PE TERMEN SCURT: "+calculSumaL(i.getConturiDatoriiCurente()));
+end
+
+rule "Rata lichiditatii INTERMEDIARE este NESATISFACATOARE"
+    
+    when
+       i: IndicatorFinanciar() and 
+       r: RataLichidIntermediara(indicatorFinanciar == i, ValoareRataLichidIntermediara<0.65 )
+    then
+    r.setTip(TipLichiditate.NESATISFACATOARE);
+    System.out.println("Rata LICHIDITATII INTERMEDIARE este nesatisfacatoare, valoarea sa fiind "+r.getValoareRataLichidIntermediara());
+end
+
+
+rule "Rata lichiditatii INTERMEDIARE este SATISFACATOARE"
+    
+    when
+       i: IndicatorFinanciar() and 
+       r: RataLichidIntermediara(indicatorFinanciar == i, ValoareRataLichidIntermediara>=0.65 || ValoareRataLichidIntermediara<=1)
+    then
+    r.setTip(TipLichiditate.SATISFACATOARE);
+    System.out.println("Rata LICHIDITATII INTERMEDIARE este satisfacatoare, valoarea sa fiind "+r.getValoareRataLichidIntermediara());
+end
+
+
+rule "Rata lichiditatii INTERMEDIARE este FOARTE BUNA"
+    
+    when
+       i: IndicatorFinanciar() and 
+       r: RataLichidIntermediara(indicatorFinanciar == i, ValoareRataLichidIntermediara>1)
+    then
+    r.setTip(TipLichiditate.FOARTE_BUNA);
+    System.out.println("Rata LICHIDITATII INTERMEDIARE este FOARTE BUNA, valoarea sa fiind "+r.getValoareRataLichidIntermediara());
+end
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+rule "Lichiditata RAPIDA "
+
+    when
+       i: IndicatorFinanciar(Creante.size()>0, ConturiDisponibilitatiBanestiDinCasierie.size()>0, ConturiDatoriiCurente.size()>0)
+    then
+       RataLichidRapida r= new RataLichidRapida(i);
+       r.setValoareRataLichidRapida();
+       insert(r);
+       System.out.println("Se poate calcula rata lichiditatii RAPIDE ");
+       System.out.println("Valoarea CREANTELOR: "+calculSumaL(i.getCreante()));
+       System.out.println("Valoarea DISPONIBILITATILOR BANESTI DIN CASIERIE: "+calculSumaL(i.getConturiDisponibilitatiBanestiDinCasierie()));
+       System.out.println("Valoarea DATORIILOR PE TERMEN SCURT: "+calculSumaL(i.getConturiDatoriiCurente()));
+end
+
+
+rule "Rata lichiditatii RAPIDE este NESATISFACATOARE"
+    
+    when
+       i: IndicatorFinanciar() and 
+       r: RataLichidRapida(indicatorFinanciar == i, ValoareRataLichidRapida>1 || ValoareRataLichidRapida<0.65)
+    then
+    r.setTip(TipLichiditate.NESATISFACATOARE);
+    System.out.println("Rata LICHIDITATII RAPIDE este nesatisfacatoare, valoarea sa fiind "+r.getValoareRataLichidRapida());
+end
+
+
+rule "Rata lichiditatii RAPIDE este SATISFACATOARE"
+    
+    when
+       i: IndicatorFinanciar() and 
+       r: RataLichidRapida(indicatorFinanciar == i, ValoareRataLichidRapida<1 || ValoareRataLichidRapida>=0.65)
+    then
+    r.setTip(TipLichiditate.SATISFACATOARE);
+    System.out.println("Rata LICHIDITATII RAPIDE este satisfacatoare, valoarea sa fiind "+r.getValoareRataLichidRapida());
+end
+
+
+rule "Rata lichiditatii RAPIDE este FOARTE BUNA"
+    
+    when
+       i: IndicatorFinanciar() and 
+       r: RataLichidRapida(indicatorFinanciar == i, ValoareRataLichidRapida==1)
+    then
+    r.setTip(TipLichiditate.FOARTE_BUNA);
+    System.out.println("Rata LICHIDITATII RAPIDE este FOARTE BUNA, valoarea sa fiind "+r.getValoareRataLichidRapida());
+end
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+rule "Lichiditata LA VEDERE "
+
+    when
+       i: IndicatorFinanciar(ConturiDisponibilitatiBanestiDinCasierie.size()>0, ConturiBancare.size()>0, ConturiCrediteBancarePeTermenScurt.size()>0)
+    then
+       RataLichidLaVedere r= new RataLichidLaVedere(i);
+       r.setValoareRataLichidLaVedere();
+       insert(r);
+       System.out.println("Se poate calcula rata lichiditatii La Vedere ");
+       System.out.println("Valoarea DISPONIBILITATILOR BANESTI DIN CASIERIE este: "+calculSumaL(i.getConturiDisponibilitatiBanestiDinCasierie()));
+       System.out.println("Valoarea DIN CONTURILE BANCARE este: "+calculSumaL(i.getConturiBancare()));
+       System.out.println("Valoarea CREDITELOR BANCARE PE TERMEN SCURT este de: "+calculSumaL(i.getConturiCrediteBancarePeTermenScurt()));
+end
+
+rule "Rata lichiditatii LA VEDERE este NESATISFACATOARE"
+    
+    when
+       i: IndicatorFinanciar() and 
+       r: RataLichidLaVedere(indicatorFinanciar == i, ValoareRataLichidLaVedere>1.15 || ValoareRataLichidLaVedere<0.85)
+    then
+    r.setTip(TipLichiditate.NESATISFACATOARE);
+    System.out.println("Rata LICHIDITATII LA VEDERE este nesatisfacatoare, valoarea sa fiind "+r.getValoareRataLichidLaVedere());
+end
+
+
+rule "Rata lichiditatii LA VEDERE este SATISFACATOARE"
+    
+    when
+       i: IndicatorFinanciar() and 
+       r: RataLichidLaVedere(indicatorFinanciar == i, ValoareRataLichidLaVedere<1.15 || ValoareRataLichidLaVedere>=0.85)
+    then
+    r.setTip(TipLichiditate.SATISFACATOARE);
+    System.out.println("Rata LICHIDITATII LA VEDERE este satisfacatoare, valoarea sa fiind "+r.getValoareRataLichidLaVedere());
+end
+
+rule "Rata lichiditatii LA VEDERE este FOARTE BUNA"
+    
+    when
+       i: IndicatorFinanciar() and 
+       r: RataLichidLaVedere(indicatorFinanciar == i, ValoareRataLichidLaVedere==1.15)
+    then
+    r.setTip(TipLichiditate.FOARTE_BUNA);
+    System.out.println("Rata LICHIDITATII LA VEDERE este FOARTE BUNA, valoarea sa fiind "+r.getValoareRataLichidLaVedere());
+end
+
+
+function double calculSumaL(List listaConturi){
+	double suma=0.0;
+    for(Object c:listaConturi){
+    	suma+=((ContClient)c).getSuma();
+   	}
+   	
+   	return suma;
+}
