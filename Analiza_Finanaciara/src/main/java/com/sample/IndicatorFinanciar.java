@@ -3,13 +3,40 @@ package com.sample;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.AssociationOverride;
+import javax.persistence.AssociationOverrides;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+
 import com.sample.ContClient;
 
+@Entity
 public class IndicatorFinanciar {
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name = "id")
 	private Long id;
+	
+	@Column(name="denumire")
 	private String denumire;
 	
 	//Lichiditate
+	
+	@OneToMany
+	@AssociationOverrides({
+		@AssociationOverride(name = "TipCont",
+				joinColumns = @JoinColumn(name = "Tip_Cont"))	
+	})
+	@JoinTable(name = "Active_Circulante",
+				joinColumns = @JoinColumn(name = "cont_id"),
+				inverseJoinColumns = @JoinColumn(name = "id"))
 	private List<ContClient> conturiActiveCirculante= new ArrayList<ContClient>();
 	private List<ContClient> conturiDatoriiCurente = new ArrayList<ContClient>();
 	private List<ContClient> conturiStocuri = new ArrayList<ContClient>();
