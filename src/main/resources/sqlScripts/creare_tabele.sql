@@ -180,3 +180,5 @@ CONSTRAINT fk_cont_id FOREIGN KEY (cont_id) REFERENCES cont_client(id),
 CONSTRAINT fk_stocuri_medii_id FOREIGN KEY (stocuri_medii_id) REFERENCES indicator_financiar(id)
 );
 
+CREATE SEQUENCE cont_client_id_seq START WITH 1 INCREMENT BY 1 NO CYCLE;
+CREATE SEQUENCE indicator_financiar_id_seq START WITH 1 INCREMENT BY 1 NO CYCLE;
