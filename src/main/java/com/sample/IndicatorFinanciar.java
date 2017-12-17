@@ -3,42 +3,159 @@ package com.sample;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
 import com.sample.ContClient;
 
+@Entity
+@Table(name="indicator_financiar")
 public class IndicatorFinanciar {
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="indicator_financiar_id_seq")
+    @SequenceGenerator(name="indicator_financiar_id_seq", sequenceName="indicator_financiar_id_seq", allocationSize=1)
+	@Column(name = "id")
 	private Long id;
+	
+	@Column(name="denumire")
 	private String denumire;
 	
 	//Lichiditate
+	@OneToMany
+	@JoinTable(name = "active_circulante",
+				joinColumns = @JoinColumn(name = "cont_id"),
+				inverseJoinColumns = @JoinColumn(name = "activ_circulant_id"))
 	private List<ContClient> conturiActiveCirculante= new ArrayList<ContClient>();
+	
+	@OneToMany
+	@JoinTable(name = "datorii_curente",
+				joinColumns = @JoinColumn(name = "cont_id"),
+				inverseJoinColumns = @JoinColumn(name = "datorii_curente_id"))
 	private List<ContClient> conturiDatoriiCurente = new ArrayList<ContClient>();
+	
+	@OneToMany
+	@JoinTable(name = "stocuri",
+				joinColumns = @JoinColumn(name = "cont_id"),
+				inverseJoinColumns = @JoinColumn(name = "stocuri_id"))
 	private List<ContClient> conturiStocuri = new ArrayList<ContClient>();
+	
+	@OneToMany
+	@JoinTable(name = "investitii_termen_scurt",
+				joinColumns = @JoinColumn(name = "cont_id"),
+				inverseJoinColumns = @JoinColumn(name = "investitii_termen_scurt_id"))
 	private List<ContClient> conturiInvestitiiFinanciarePeTermenScurt = new ArrayList<ContClient>();
+	
+	@OneToMany
+	@JoinTable(name = "creante",
+				joinColumns = @JoinColumn(name = "cont_id"),
+				inverseJoinColumns = @JoinColumn(name = "creante_id"))
 	private List<ContClient> creante = new ArrayList<ContClient>();
+	
+	@OneToMany
+	@JoinTable(name = "disponibilitati_banesti_casierie",
+				joinColumns = @JoinColumn(name = "cont_id"),
+				inverseJoinColumns = @JoinColumn(name = "disponibilitati_banesti_casierie_id"))
 	private List<ContClient> conturiDisponibilitatiBanestiDinCasierie = new ArrayList<ContClient>();
+	
+	@OneToMany
+	@JoinTable(name = "conturi_bancare",
+				joinColumns = @JoinColumn(name = "cont_id"),
+				inverseJoinColumns = @JoinColumn(name = "conturi_bancare_id"))
 	private List<ContClient> conturiBancare = new ArrayList<ContClient>();
+	
+	@OneToMany
+	@JoinTable(name = "credite_bancare_termen_scurt",
+				joinColumns = @JoinColumn(name = "cont_id"),
+				inverseJoinColumns = @JoinColumn(name = "credite_bancare_termen_scurt_id"))
 	private List<ContClient> conturiCrediteBancarePeTermenScurt = new ArrayList<ContClient>();
 	
 
 	// Solvabilitate
+	
+	@OneToMany
+	@JoinTable(name = "total_datorii",
+				joinColumns = @JoinColumn(name = "cont_id"),
+				inverseJoinColumns = @JoinColumn(name = "total_datorii_id"))
 	private List<ContClient> conturiTotalDatorii = new ArrayList<ContClient>();
+	
+	@OneToMany
+	@JoinTable(name = "total_activ",
+				joinColumns = @JoinColumn(name = "cont_id"),
+				inverseJoinColumns = @JoinColumn(name = "total_activ_id"))
 	private List<ContClient> conturiTotalActiv = new ArrayList<ContClient>();
+	
+	@OneToMany
+	@JoinTable(name = "capital_propriu",
+				joinColumns = @JoinColumn(name = "cont_id"),
+				inverseJoinColumns = @JoinColumn(name = "capital_propriu_id"))
 	private List<ContClient> conturiCapitalPropriu = new ArrayList<ContClient>();
+	
+	@OneToMany
+	@JoinTable(name = "total_capitaluri",
+				joinColumns = @JoinColumn(name = "cont_id"),
+				inverseJoinColumns = @JoinColumn(name = "total_capitaluri_id"))
 	private List<ContClient> conturiTotalCapitaluri = new ArrayList<ContClient>();
+	
+	@OneToMany
+	@JoinTable(name = "scadente_rambursare",
+				joinColumns = @JoinColumn(name = "cont_id"),
+				inverseJoinColumns = @JoinColumn(name = "scadente_rambursare_id"))
 	private List<ContClient> rateScadenteRambursare = new ArrayList<ContClient>();
+	
+	@OneToMany
+	@JoinTable(name = "dobanzi_rate",
+				joinColumns = @JoinColumn(name = "cont_id"),
+				inverseJoinColumns = @JoinColumn(name = "dobanzi_rate_id"))
 	private List<ContClient> dobanziRate = new ArrayList<ContClient>();
 	private Double cashFlow;
 	
 	//Autonomie Financiara
+	@OneToMany
+	@JoinTable(name = "capital_permanent",
+				joinColumns = @JoinColumn(name = "cont_id"),
+				inverseJoinColumns = @JoinColumn(name = "capital_permanent_id"))
 	private List<ContClient> conturiCapitalPermanent = new ArrayList<ContClient>();
+	
+	@OneToMany
+	@JoinTable(name = "pasiv_total",
+				joinColumns = @JoinColumn(name = "cont_id"),
+				inverseJoinColumns = @JoinColumn(name = "pasiv_total_id"))
 	private List<ContClient> conturiPasivTotal = new ArrayList<ContClient>();
 	
+	@OneToMany
+	@JoinTable(name = "datorii_termen_lung",
+				joinColumns = @JoinColumn(name = "cont_id"),
+				inverseJoinColumns = @JoinColumn(name = "datorii_termen_lung_id"))
 	private List<ContClient> conturiDatoriiPeTermenLung = new ArrayList<ContClient>();
 	
 	//Viteza de rotatie a activelor
+	@OneToMany
+	@JoinTable(name = "cifra_de_afaceri",
+				joinColumns = @JoinColumn(name = "cont_id"),
+				inverseJoinColumns = @JoinColumn(name = "cifra_de_afaceri_id"))
 	private List<ContClient> conturiCifraDeAfaceri = new ArrayList<ContClient>();
+	
+	@OneToMany
+	@JoinTable(name = "capitaluri_circulante",
+				joinColumns = @JoinColumn(name = "cont_id"),
+				inverseJoinColumns = @JoinColumn(name = "capitaluri_circulante_id"))
 	private List<ContClient> conturiCapitaluriCirculante = new ArrayList<ContClient>();
+	
+	@OneToMany
+	@JoinTable(name = "stoc_global_mediu",
+				joinColumns = @JoinColumn(name = "cont_id"),
+				inverseJoinColumns = @JoinColumn(name = "stoc_global_mediu_id"))
 	private List<ContClient> conturiStocGlobalMediu = new ArrayList<ContClient>();
+	
+
 	private Double bazaDeCalcul;
 	private Double numarDeRotatii;
 	private Double stocuriMedii;
